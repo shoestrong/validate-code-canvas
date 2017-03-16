@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>验证码canvas</title>
+    <style type="text/css">
+        .st_refresh{
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <span class="st_container" id="st_container"></span><a href="javascript:;" class="st_refresh" id="st_refresh">刷新</a>
+    <div>
+        <input type="text" id="st_code" name="">
+        <input type="button" id="st_button" value="验证">
+    </div>
+    <div id="st_validate"></div>
+    <script type="text/javascript" src="validate_code.js"></script>
+    <script type="text/javascript">
+        var verifyCode = new GVerify("st_container");
+        document.getElementById("st_button").onclick = function(){
+            var res = verifyCode.validate(document.getElementById("st_code").value);
+            document.getElementById("st_validate").innerHTML = "验证中...";
+            if(res){
+                setTimeout(function(){
+                    document.getElementById("st_validate").innerHTML = "验证成功";
+                },1000)
+            }else{                
+                setTimeout(function(){
+                    document.getElementById("st_validate").innerHTML = "验证失败";
+                    document.getElementById("st_code").value = "";
+                },1000)
+            }
+        }
+        document.getElementById("st_refresh").onclick = function(){
+            verifyCode.refresh();
+        }
+    </script>
+</body>
+</html>
